@@ -1,0 +1,15 @@
+extends layout
+block content
+    if players
+        each player in players
+            p=player.name
+    if message
+        each message in messages
+            div
+                p=message.author
+                p=message.content
+
+    form(method='POST' action='')
+        label(for='message') Message:
+        input(type='text' name='message' placeholder='Type your message!')
+        button(type='submit') Send Message
