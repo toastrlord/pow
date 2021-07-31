@@ -13,3 +13,7 @@ block content
         label(for='message') Message:
         input(type='text' name='message' placeholder='Type your message!')
         button(type='submit') Send Message
+    script(src='/socket.io/socket.io.js')
+    script. 
+        var socket = io();
+        console.log('io constructor!');
