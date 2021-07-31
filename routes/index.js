@@ -5,12 +5,7 @@ const lobby = require('../lobby');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if (req.cookies.name) {
-    res.render('lobby', {messages: lobby.getMessages()});
-  }
-  else {
-    res.redirect('/signin');
-  }
+  res.render('signin');
 });
 
 router.post('/',
