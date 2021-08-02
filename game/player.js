@@ -16,7 +16,7 @@ class Player {
     harm(amount) {
         this.health -= amount;
         if (this.health <= 0) {
-            this.onDeath(this);
+            this.onDeath();
         }
     }
 
@@ -25,6 +25,10 @@ class Player {
         if (this.health > this.maxHealth) {
             this.health = this.maxHealth;
         }
+    }
+
+    isAlive() {
+        return this.health > 0;
     }
 
     equip(equipment) {

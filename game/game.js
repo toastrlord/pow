@@ -1,46 +1,5 @@
 const characters = loadCharacters();
-const deck = loadCards();
-const discard = [];
-
-function drawCards(numCards) {
-    const result = [];
-    for (let i = 0; i < numCards; i++) {
-        result.push(drawCard());
-    }
-    return result;
-}
-
-function drawCard() {
-    if (!deck.length) {
-        shuffle();
-    }
-    return deck.pop();
-}
-
-function shuffle() {
-    const shuffled = pickRandomMultiple(discard, discard.length);
-    deck.push(shuffled);
-}
-
-function discardCard(card) {
-    discard.push(card);
-}
-
-function pickRandomSingle(elements) {
-    if (!elements.length) {
-        throw new Error('pickRandomSingle: tried to pick from empty array!');
-    }
-    const index = Math.random() * (elements.length - 1);
-    return elements.splice(index, 1)[0];
-}
-
-function pickRandomMultiple(elements, times) {
-    const result = [];
-    for (let i = 0; i < times; i++) {
-        result.push(pickRandomSingle(elements));
-    }
-    return result;
-}
+const currentPlayerIndex = 0;
 
 function initGame(players) {
     let roles;
@@ -63,6 +22,7 @@ function initGame(players) {
         player.role = pickRandomSingle(roles);
         player.charactersToPick = pickRandomMultiple(characters, 2);
         player.hand = drawCards(player.maxHealth);
+        player.addDeathListener(() => onPlayerDeath(player));
     });
     
     // reorder players so that the sheriff goes first, and other players go after
@@ -71,4 +31,36 @@ function initGame(players) {
     });
     const playersBeforeSheriff = players.splice(sheriffIndex);
     players = players.push(playersBeforeSheriff);
+}
+
+function onPlayerDeath(player) {
+    if (player.role === 'S') {
+        // either outlaws win, or renegades win
+        const survivingPlayers = players.filter(player => player.isAlive());
+        if (survivingPlayers.length === 1 && survivingPlayers[0].role === 'R') {
+            // renegade wins!
+        }
+        else {
+            // outlaws win!
+        }
+    }
+    else {
+        if (!players.filter(player => player.isAlive() && player.role === 'O' || player.role === 'R').length) {
+            // sheriff wins!
+        }
+    }
+}
+
+function playCard(player, card, target) {
+    // resolve the cards effects
+}
+
+function nextTurn() {
+    do {
+        currentPlayerIndex++;
+    } while (!players[currentPlayerIndex].isAlive());
+}
+
+function startTurn() {
+    // need to resolve any effects on the current player before allowing them to play cards
 }
