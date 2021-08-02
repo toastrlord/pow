@@ -23,6 +23,10 @@ socket.on('new username', function(users) {
     });
 });
 
+socket.on('display change', function(htmlData) {
+
+});
+
 socket.onAny((event, ...args) => {
     console.log(event, args);
 });
