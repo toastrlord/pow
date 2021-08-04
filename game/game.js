@@ -33,8 +33,14 @@ function initGame(players) {
     players = players.push(playersBeforeSheriff);
 }
 
-function onPlayerDeath(player) {
-    if (player.role === 'S') {
+function onPlayerDeath(player, killer) {
+    if (player.role === 'O') {
+        // cause the killer to draw 3 cards as a reward
+    }
+    else if (player.role === 'D') {
+        // if the killer was the sheriff, strip them of all their belongings as punishment
+    }
+    else if (player.role === 'S') {
         // either outlaws win, or renegades win
         const survivingPlayers = players.filter(player => player.isAlive());
         if (survivingPlayers.length === 1 && survivingPlayers[0].role === 'R') {
