@@ -1,4 +1,4 @@
-const characters = loadCharacters();
+//const characters = loadCharacters();
 const currentPlayerIndex = 0;
 
 function initGame(players) {
@@ -57,6 +57,17 @@ function onPlayerDeath(player, killer) {
     }
 }
 
+function distance(players, player1, player2) {
+    const p1Index = players.indexOf(player1);
+    const p2Index = players.indexOf(player2);
+    const minIndex = Math.min(p1Index, p2Index);
+    const maxIndex = Math.max(p1Index, p2Index);
+    const dist1 = maxIndex - minIndex; // checking to the right
+    const dist2 = minIndex + (players.length - maxIndex); //checking to the left
+
+    return Math.min(dist1, dist2);
+}
+
 function playCard(player, card, target) {
     // resolve the cards effects
 }
@@ -70,3 +81,5 @@ function nextTurn() {
 function startTurn() {
     // need to resolve any effects on the current player before allowing them to play cards
 }
+
+module.exports.distance = distance;
