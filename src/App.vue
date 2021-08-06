@@ -1,25 +1,30 @@
 <template>
     <div id='app'>
-        <p>Hello World!</p>
-        <input type='text' id='usernameInput'></input>
-        <button>Connect!</button>
+        <select-username @input='onUsernameSelection' v-if='!signedIn'/>
+        <lobby v-else />
     </div>
 </template>
 
 <script>
 import SelectUsername from './components/SelectUsername.vue';
+import Lobby from './components/Lobby.vue';
 import socket from './socket';
 
 export default {
     name: 'App',
     components: {
         SelectUsername,
+        Lobby,
     },
     data() {
-        return {}
+        return {
+            signedIn: false,
+        }
     },
     methods: {
         onUsernameSelection(username) {
+            this.signedIn = true;
+            socket.auth = { username };
             socket.connect();
         }
     }

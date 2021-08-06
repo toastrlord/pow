@@ -15,6 +15,7 @@ export default {
     },
     methods: {
         submitUsername() {
+            console.log(this.username);
             this.$emit('input', this.username);
         },
     },
