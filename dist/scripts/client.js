@@ -1,8 +1,4 @@
 const socket = io('localhost:3000', {autoConnect: false});
-const form = document.querySelector('form');
-const input = document.querySelector('input');
-const userContainer = document.createElement('div');
-document.querySelector('body').append(userContainer);
 
 io.on('connection', (socket) => {
     const users = [];
@@ -25,6 +21,5 @@ io.on('connection', (socket) => {
 });
 
 socket.onAny((event, ...args) => {
-    console.log('event!');
     console.log(event, args);
 });

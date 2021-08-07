@@ -8,6 +8,7 @@
 <script>
 import SelectUsername from './components/SelectUsername.vue';
 import Lobby from './components/Lobby.vue';
+import User from './components/User.vue';
 import socket from './socket';
 
 export default {
