@@ -6,6 +6,8 @@ const io = require('socket.io')(httpServer, {
     }
 });
 
+const messages = [];
+
 io.on('connection', (socket) => {
     const users = [];
     for (let [id, socket] of io.of('/').sockets) {
@@ -15,6 +17,7 @@ io.on('connection', (socket) => {
         });
     }
     socket.emit('users', users);
+    socket.emit('messages', messages);
 
     socket.broadcast.emit('user connected', {
         userID: socket.id,
@@ -25,8 +28,9 @@ io.on('connection', (socket) => {
     socket.on('user ready', user => {
         io.emit('user ready', user);
     });
-
+    
     socket.on('new message', message => {
+        messages.push(message);
         io.emit('new message', message);
     });
 

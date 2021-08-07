@@ -4,7 +4,7 @@
         <message v-for='message in messages' :key='message.content' v-bind:sender='message.sender' v-bind:content='message.content'/>
         
         <input type='text' v-model='messageText'/>
-        <button @click='sendMessage'>Send</button>
+        <button :disabled='!isValid' @click='sendMessage'>Send</button>
         <button @click='readyUp'>Ready</button>
     </div>
 </template>
@@ -28,6 +28,11 @@ export default {
             messageText: '',
         };
     },
+    computed: {
+        isValid() {
+            return this.messageText.length > 0;
+        }
+    },
     created() {
         socket.on('users', (users) => {
             console.log('updating users');
@@ -47,6 +52,10 @@ export default {
 
         socket.on('new message', message => {
             this.messages.push(message);
+        });
+
+        socket.on('messages', messages => {
+            this.messages = messages;
         });
     },
     methods: {
