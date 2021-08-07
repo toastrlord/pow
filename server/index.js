@@ -23,11 +23,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('user ready', user => {
-        socket.emit('user ready', user);
+        io.emit('user ready', user);
     });
 
     socket.on('new message', message => {
-        socket.emit('new message', message);
+        io.emit('new message', message);
     });
 
     socket.on('disconnect', () => {
