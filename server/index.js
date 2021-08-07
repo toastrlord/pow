@@ -22,6 +22,14 @@ io.on('connection', (socket) => {
         isReady: false,
     });
 
+    socket.on('user ready', user => {
+        socket.emit('user ready', user);
+    });
+
+    socket.on('new message', message => {
+        socket.emit('new message', message);
+    });
+
     socket.on('disconnect', () => {
         socket.broadcast.emit('user disconnected');
     });
