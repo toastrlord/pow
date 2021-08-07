@@ -7,26 +7,30 @@ const io = require('socket.io')(httpServer, {
 });
 
 const messages = [];
+const users = [];
+
+function numReadyUsers() {
+    return users.filter(user => user.isReady).length;
+}
 
 io.on('connection', (socket) => {
-    const users = [];
+    const newUser = {userID: socket.id, username: socket.username, isReady: false};
+    users.push(newUser);
+    /*const users = [];
     for (let [id, socket] of io.of('/').sockets) {
         users.push({
             userID: id,
             username: socket.username,
         });
-    }
+    }*/
+    socket.broadcast.emit('user connected', newUser);
     socket.emit('users', users);
     socket.emit('messages', messages);
 
-    socket.broadcast.emit('user connected', {
-        userID: socket.id,
-        username: socket.username,
-        isReady: false,
-    });
-
     socket.on('user ready', user => {
         io.emit('user ready', user);
+        users.find(u => u.userID === user.userID).isReady = true;
+        console.log(`users ready: ${numReadyUsers()}`);
     });
     
     socket.on('new message', message => {
@@ -35,7 +39,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        socket.broadcast.emit('user disconnected');
+        socket.broadcast.emit('user disconnected', socket.id);
+        users.splice(users.findIndex(u => u.userID === socket.id), 1);
     });
 });
 

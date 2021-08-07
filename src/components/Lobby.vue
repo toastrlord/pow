@@ -43,6 +43,10 @@ export default {
             this.users.push(user);
         });
 
+        socket.on('user disconnected', id => {
+            this.users.splice(this.users.findIndex(user => user.userID === id), 1);
+        });
+
         socket.on('user ready', user => {
             const index = this.users.findIndex(u => u.userID === user.userID);
             const updatedUser = this.users[index];
