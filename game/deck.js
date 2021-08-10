@@ -1,6 +1,27 @@
+const { default: Card } = require('./card');
+const fs = require('fs');
 const randomUtil = require('./randomUtil');
-const deck = loadCards();
+const deck = [];
 const discard = [];
+
+/**
+ * Should be called on starting a new game. Clears the deck, loads the card data from path, and 
+ * shuffles it.
+ * @param {*} path 
+ */
+function loadCards(path) {
+    deck.splice(0, deck.length);
+    const cardData = JSON.parse(fs.readFileSync(path));
+    deck.push(cardData.map(thisData => {
+        const newCards = [];
+        for (let i = 0; i < thisData.quantity; i++) {
+            newCards.push(new Card(thisData.name, thisData.description, thisData.imgSrc));
+        }
+        return newCards;
+    }));
+    shuffle();
+    console.log(deck);
+}
 
 /**
  * Draw the given number of cards from the deck, re-shuffling from the discard pile
@@ -47,4 +68,4 @@ function discardCard(card) {
     discard.push(card);
 }
 
-exports = {drawDeck, peekDeck, shuffle, discardCard }
+exports = {drawDeck, peekDeck, shuffle, discardCard, loadCards }

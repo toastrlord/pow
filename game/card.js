@@ -1,7 +1,8 @@
 class Card {
-    constructor(rank, suit, onPlay) {
-        this.rank = rank;
-        this.suit = suit;
+    constructor(name, description, imgSrc, onPlay) {
+        this.name = name;
+        this.description = description;
+        this.imgSrc = imgSrc;
         this.onPlay = onPlay;
     }
 }

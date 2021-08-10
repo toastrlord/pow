@@ -13,6 +13,15 @@ function numReadyUsers() {
     return users.filter(user => user.isReady).length;
 }
 
+function gameReadyToStart() {
+    const numPlayers = users.length;
+    if (numPlayers >= 4 && numPlayers <= 6) {
+        if (numReadyUsers() === numPlayers) {
+            console.log('starting game');
+        }
+    }
+}
+
 io.on('connection', (socket) => {
     const newUser = {userID: socket.id, username: socket.username, isReady: false};
     users.push(newUser);
@@ -30,7 +39,7 @@ io.on('connection', (socket) => {
     socket.on('user ready', user => {
         io.emit('user ready', user);
         users.find(u => u.userID === user.userID).isReady = true;
-        console.log(`users ready: ${numReadyUsers()}`);
+        gameReadyToStart();
     });
     
     socket.on('new message', message => {

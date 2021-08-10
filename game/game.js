@@ -1,7 +1,9 @@
+const deck = require('./deck');
 //const characters = loadCharacters();
 const currentPlayerIndex = 0;
 
 function initGame(players) {
+    deck.loadCards('./data/card_data.json');
     let roles;
     switch (players.length) {
         case 4:
@@ -31,6 +33,7 @@ function initGame(players) {
     });
     const playersBeforeSheriff = players.splice(sheriffIndex);
     players = players.push(playersBeforeSheriff);
+    load
 }
 
 function onPlayerDeath(player, killer) {
