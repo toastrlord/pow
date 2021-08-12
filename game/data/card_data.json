@@ -2,7 +2,41 @@
     {
         "name": "pow",
         "quantity": 4,
-        "imgSrc": "pow.png",
         "description": "This is a pow card."
+    },
+    {
+        "name": "rifle",
+        "isEquipment": "true",
+        "range": 2,
+        "quantity": 4,
+        "description": "This is a rifle! Increase your range by one"
+    },
+    {
+        "name": "cover",
+        "isEquipment": "true",
+        "quantity": 4,
+        "description": "Protect yourself from harm!"
+    },
+    {
+        "name": "big rifle",
+        "isEquipment": "true",
+        "range": 3,
+        "quantity": 4,
+        "description": "This is a rifle for reeeaaally long distances! Increase your range by two"
+    },
+    {
+        "name": "medicine",
+        "quantity": 4,
+        "description": "Heal yourself!"
+    },
+    {
+        "name": "supply cache",
+        "quantity": 3,
+        "description": "Draw three cards!"
+    },
+    {
+        "name": "time chamber",
+        "quantity": 2,
+        "description": "Skip another players turn!"
     }
 ]

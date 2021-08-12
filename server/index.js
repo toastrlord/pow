@@ -39,7 +39,9 @@ io.on('connection', (socket) => {
     socket.on('user ready', user => {
         io.emit('user ready', user);
         users.find(u => u.userID === user.userID).isReady = true;
-        gameReadyToStart();
+        if (gameReadyToStart()) {
+            io.emit('game start');
+        }
     });
     
     socket.on('new message', message => {
@@ -55,6 +57,9 @@ io.on('connection', (socket) => {
 
 io.use((socket, next) => {
     const username = socket.handshake.auth.username;
+    if (users.filter(user => user.name === username)) {
+        return next(new Error('Username already chosen!'));
+    }
     if (!username) {
         return next(new Error('Invalid username!'));
     }

@@ -1,6 +1,7 @@
 <template>
     <div id='app'>
         <select-username @input='onUsernameSelection' v-if='!signedIn'/>
+        <game v-else-if="gameStarted" />
         <lobby v-else />
     </div>
 </template>
@@ -20,7 +21,13 @@ export default {
     data() {
         return {
             signedIn: false,
+            gameStarted: false,
         }
+    },
+    created() {
+        socket.on('game start', () => {
+            this.gameStarted = true;
+        });
     },
     methods: {
         onUsernameSelection(username) {

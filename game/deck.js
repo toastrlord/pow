@@ -16,8 +16,19 @@ function loadCards(path) {
     deck.push(cardData.map(thisData => {
         const newCards = [];
         for (let i = 0; i < thisData.quantity; i++) {
+            if (thisData.isEquipment) {
+                newCards.push(new Card(
+                    thisData.name,
+                    thisData.description,
+                    thisData.name + '.png',
+                    cardFunctions.equip));
+            }
             if (cardFunctions[thisData.name]) {
-                newCards.push(new Card(thisData.name, thisData.description, thisData.imgSrc, cardFunctions[thisData.name]));
+                newCards.push(new Card(
+                    thisData.name, 
+                    thisData.description, 
+                    thisData.name + '.png', 
+                    cardFunctions[thisData.name]));
             }
             else {
                 throw new Error(`loadCards: function not found for ${thisData.name}`);
