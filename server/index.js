@@ -1,3 +1,4 @@
+const game = require('../game/game');
 const httpServer = require('http').createServer();
 const io = require('socket.io')(httpServer, {
     cors: {
@@ -17,7 +18,8 @@ function gameReadyToStart() {
     const numPlayers = users.length;
     if (numPlayers >= 4 && numPlayers <= 6) {
         if (numReadyUsers() === numPlayers) {
-            console.log('starting game');
+            game.initGame();
+            io.emit('players', game.players);
         }
     }
 }
@@ -40,7 +42,8 @@ io.on('connection', (socket) => {
         io.emit('user ready', user);
         users.find(u => u.userID === user.userID).isReady = true;
         if (gameReadyToStart()) {
-            io.emit('game start');
+            initGame();
+            io.emit('game start', );
         }
     });
     

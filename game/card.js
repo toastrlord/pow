@@ -7,4 +7,4 @@ class Card {
     }
 }
 
-export default Card;
+exports.Card = Card;

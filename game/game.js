@@ -1,11 +1,13 @@
 const deck = require('./deck');
+const Player = require('./player');
 //const characters = loadCharacters();
 const currentPlayerIndex = 0;
+let players;
 
-function initGame(players) {
+function initGame(users) {
     deck.loadCards('./data/card_data.json');
     let roles;
-    switch (players.length) {
+    switch (users.length) {
         case 4:
             roles = ['S', 'O', 'O', 'R'];
             break;
@@ -20,7 +22,9 @@ function initGame(players) {
     }
     // assign roles at random, give them two characters to pick from, and give them a starting hand
     // equal to their max health
-    players.foreach(player => {
+    players = users.map(user => {
+        const player = {};
+        player.username = user.username;
         player.role = pickRandomSingle(roles);
         player.charactersToPick = pickRandomMultiple(characters, 2);
         player.hand = drawCards(player.maxHealth);
@@ -33,7 +37,6 @@ function initGame(players) {
     });
     const playersBeforeSheriff = players.splice(sheriffIndex);
     players = players.push(playersBeforeSheriff);
-    load
 }
 
 function onPlayerDeath(player, killer) {
@@ -85,4 +88,4 @@ function startTurn() {
     // need to resolve any effects on the current player before allowing them to play cards
 }
 
-module.exports.distance = distance;
+exports = { distance, initGame, players };

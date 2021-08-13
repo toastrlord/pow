@@ -1,11 +1,12 @@
 class Player {
-    constructor(name, startHealth, character) {
+    constructor(name, startHealth, character, role) {
         this.name = name;
         this.health = startHealth;
         this.maxHealth = startHealth;
         this.character = character;
         this.hand = [];
         this.equippedItems = [];
+        this.role = role;
     }
 
     // expects a function that takes a player as an argument
@@ -35,3 +36,5 @@ class Player {
         this.equippedItems.push(equipment);
     }
 }
+
+exports.Player = Player;
